@@ -1,0 +1,31 @@
+
+
+  Lire le fichier "question.qs"
+
+  iddentifier les ligne avec 2#
+
+  si ligne = ## {
+
+    $Theme = ##
+
+    alors si ligne = #
+
+    $question = #
+
+}
+  si ligne = "-" {
+  $choix = "-"
+  sinon
+  break
+  }
+
+  on stock les variable dans un tableau
+
+  $tableau = "$theme, $question, $choix"
+
+  pour $tableau $i < $tableau, $i++ {
+
+
+
+
+  }
