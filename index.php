@@ -2,12 +2,14 @@
 
 $file = fopen("question.qs", "r" );
 
-$lines=file("question.qs");$theme = "##";
+$lines=file("question.qs");
+$theme = "##";
 
 $question = "#";
 
 $possibilites = array();
-
+$monfichier = fopen('reponse.html', 'rw');
+$tableau=file("question.qs");
 
 $numero=0;
 
@@ -39,6 +41,7 @@ echo '<!DOCTYPE html>'.
 
 foreach ($lines as $linenumber => $linecontent) {
 
+
   if (empty($linecontent) or strlen($linecontent) < 2) continue;
 
   if (substr($linecontent, 0, 2) == "##") {
@@ -59,6 +62,7 @@ echo '<h3>',$tableau1,'</h3>'."\n";
 
   elseif ($linecontent[0] == '#' and $linecontent[1] != '#') {
 
+
       // On reinitialise notre variable possibilité quand on detecte une nouvelle question
 
       $possibilites = array();
@@ -67,20 +71,29 @@ echo '<h3>',$tableau1,'</h3>'."\n";
 
 echo '<section id=bloc1><h4><span>',$numero, $tableau2,'</span></h4>', "\n";
 
-      $numero ++;    }    elseif ($linecontent[0] == '-')
+
+if ($tableau[$linenumber+1][0]=="#"){
+  echo '<input type="text" name="ecrire['.$possibilites.']" value="">'.'<br>';
+ }
+
+      $numero ++;    }
+        elseif ($linecontent[0] == '-')
 
   {
 
     $possibilites = $linecontent;
 // echo '<li>'.$possibilites.'</li>'."\n";
 echo '<form method="POST" action="choix.php">
-     <input type="checkbox" name="choix[]" value="'.$tableau2.$linecontent.'">'.$possibilites.'<br>';     // <input type="checkbox" name="choix[]" value="2"> nom 2<br>
+     <input type="checkbox" name="choix[]" value="'.$tableau2.$linecontent.'">'.$possibilites.'<br>'  ;  // <input type="checkbox" name="choix[]" value="2"> nom 2<br>
+
      // <input type="checkbox" name="choix[]" value="3"> nom 3<br>
      // <input type="checkbox" name="choix[]" value="4"> nom 4<br>
      // <input type="checkbox" name="choix[]" value="5"> nom 5<br>
 
    }
 
+
  }
+$monfichier =fclose('reponse.html');
 echo '<input type="submit" value="envoyé">';
 echo '</form>';
